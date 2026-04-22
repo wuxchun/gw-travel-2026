@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GW旅行战术计划 - 特种部队终端</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- 自定义战术风格CSS -->
+    <link rel="stylesheet" href="style.css">
+    <!-- Font Awesome 图标 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- 谷歌字体：战术风格 -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    <!-- 自定义JavaScript -->
+    <script src="script.js" defer></script>
+</head>
+<body class="bg-gray-900 text-gray-100 font-sans">
+    <!-- 战术终端头部 -->
+    <header class="bg-black border-b-2 border-amber-500 py-4 px-6">
+        <div class="container mx-auto flex flex-col md:flex-row justify-between items-center">
+            <div class="flex items-center mb-4 md:mb-0">
+                <div class="w-10 h-10 bg-amber-500 rounded-full flex items-center justify-center mr-3">
+                    <i class="fas fa-crosshairs text-black text-xl"></i>
+                </div>
+                <div>
+                    <h1 class="text-2xl md:text-3xl font-bold font-orbitron text-amber-400">GW旅行战术计划</h1>
+                    <p class="text-sm text-green-400 font-share-tech">特种部队作战终端 v2.0</p>
+                </div>
+            </div>
+            <div class="flex items-center">
+                <div class="mr-4 text-sm">
+                    <span class="text-green-400">状态:</span>
+                    <span class="ml-2 text-amber-300">任务准备就绪</span>
+                </div>
+                <div class="w-3 h-3 bg-green-500 rounded-full animate-pulse"></div>
+            </div>
+        </div>
+    </header>
+
+    <!-- 标签页切换 -->
+    <div class="container mx-auto px-4 py-6">
+        <div class="flex flex-wrap justify-center mb-8">
+            <div class="inline-flex rounded-lg border border-amber-700 bg-gray-800 p-1" role="tablist">
+                <button id="tab-preparation" class="tab-btn active px-6 py-3 rounded-md font-orbitron text-sm md:text-base transition-all duration-300" data-tab="preparation">
+                    <i class="fas fa-clipboard-list mr-2"></i>出发前准备
+                </button>
+                <button id="tab-day1" class="tab-btn px-6 py-3 rounded-md font-orbitron text-sm md:text-base transition-all duration-300" data-tab="day1">
+                    <i class="fas fa-biking mr-2"></i>4月30日
+                </button>
+                <button id="tab-day2" class="tab-btn px-6 py-3 rounded-md font-orbitron text-sm md:text-base transition-all duration-300" data-tab="day2">
+                    <i class="fas fa-hiking mr-2"></i>5月1日
+                </button>
+                <button id="tab-guide" class="tab-btn px-6 py-3 rounded-md font-orbitron text-sm md:text-base transition-all duration-300" data-tab="guide">
+                    <i class="fas fa-book mr-2"></i>战术指南
+                </button>
+            </div>
+        </div>
+
+        <!-- 内容区域 -->
+        <main>
+            <!-- 出发前准备 -->
+            <section id="preparation" class="tab-content active">
+                <div class="mb-8">
+                    <h2 class="text-2xl md:text-3xl font-bold mb-6 text-green-400 border-l-4 border-green-500 pl-4 font-orbitron">
+                        <i class="fas fa-hard-hat mr-2"></i>硬核准备清单
+                    </h2>
+                    
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                        <!-- 软件准备 -->
+                        <div class="bg-gray-800 border border-amber-800 rounded-lg p-6">
+                            <div class="flex items-center mb-4">
+                                <div class="w-10 h-10 bg-green-900 rounded-full flex items-center justify-center mr-3">
+                                    <i class="fas fa-laptop-code text-green-400 text-xl"></i>
+                                </div>
+                                <h3 class="text-xl font-bold text-amber-300 font-orbitron">软件准备 (Software)</h3>
+                            </div>
+                            <ul class="space-y-4">
+                                <li class="flex items-start">
+                                    <div class="w-6 h-6 bg-green-900 rounded-full flex items-center justify-center mr-3 mt-1 flex-shrink-0">
+                                        <i class="fas fa-check text-green-400 text-xs"></i>
+                                    </div>
+                                    <div>
+                                        <span class="font-bold text-green-300">COGICOGI SMART! APP：</span>
+                                        <span class="text-gray-300">确保已注册并绑定信用卡（现场扫码触发）。</span>
+                                    </div>
+                                </li>
+                                <li class="flex items-start">
+                                    <div class="w-6 h-6 bg-green-900 rounded-full flex items-center justify-center mr-3 mt-1 flex-shrink-0">
+                                        <i class="fas fa-check text-green-400 text-xs"></i>
+                                    </div>
+                                    <div>
+                                        <span class="font-bold text-green-300">Ekinet (えきねっと)：</span>
+                                        <span class="text-gray-300">确认已购好四张票（去程/回程特急、去程/回程上高地巴士）。</span>
+                                    </div>
+                                </li>
+                                <li class="flex items-start">
+                                    <div class="w-6 h-6 bg-green-900 rounded-full flex items-center justify-center mr-3 mt-1 flex-shrink-0">
+                                        <i class="fas fa-check text-green-400 text-xs"></i>
+                                    </div>
+                                    <div>
+                                        <span class="font-bold text-green-300">Suica (西瓜卡)：</span>
+                                        <span class="text-gray-300">充值 15,000 日元以上（涵盖基础车费、便利店、电车）。</span>
+                                    </div>
+                                </li>
+                                <li class="flex items-start">
+                                    <div class="w-6 h-6 bg-green-900 rounded-full flex items-center justify-center mr-3 mt-1 flex-shrink-0">
+                                        <i class="fas fa-check text-green-400 text-xs"></i>
+                                    </div>
+                                    <div>
+                                        <span class="font-bold text-green-300">离线地图：</span>
+                                        <span class="text-gray-300">Google Maps 下载"长野/山梨"区域，以防深山信号弱。</span>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <!-- 装备准备 -->
+                        <div class="bg-gray-800 border border-amber-800 rounded-lg p-6">
+                            <div class="flex items-center mb-4">
+                                <div class="w-10 h-10 bg-amber-900 rounded-full flex items-center justify-center mr-3">
+                                    <i class="fas fa-tools text-amber-400 text-xl"></i>
+                                </div>
+                                <h3 class="text-xl font-bold text-amber-300 font-orbitron">装备准备 (Hardware)</h3>
+                            </div>
+                            <ul class="space-y-4">
+                                <li class="flex items-start">
+                                    <div class="w-6 h-6 bg-amber-900 rounded-full flex items-center justify-center mr-3 mt-1 flex-shrink-0">
+                                        <i class="fas fa-check text-amber-400 text-xs"></i>
+                                    </div>
+                                    <div>
+                                        <span class="font-bold text-amber-300">包袋：</span>
+                                        <span class="text-gray-300">30L 左右的专业徒步双肩包（拒绝拉杆箱，机动性第一）。</span>
+                                    </div>
+                                </li>
+                                <li class="flex items-start">
+                                    <div class="w-6 h-6 bg-amber-900 rounded-full flex items-center justify-center mr-3 mt-1 flex-shrink-0">
+                                        <i class="fas fa-check text-amber-400 text-xs"></i>
+                                    </div>
+                                    <div>
+                                        <span class="font-bold text-amber-300">鞋子：</span>
+                                        <span class="text-gray-300">已破合的中高帮徒步鞋（应对尾白川岩石和上高地 15km 碎石路）。</span>
+                                    </div>
+                                </li>
+                                <li class="flex items-start">
+                                    <div class="w-6 h-6 bg-amber-900 rounded-full flex items-center justify-center mr-3 mt-1 flex-shrink-0">
+                                        <i class="fas fa-check text-amber-400 text-xs"></i>
+                                    </div>
+                                    <div>
+                                        <span class="font-bold text-amber-300">衣物：</span>
+                                        <span class="text-gray-300">排汗层：速干短袖/长袖。保暖层：轻便羽绒服或抓绒衣。防护层：冲锋衣（防风防雨）。下装：Montbell 徒步裤。</span>
+                                    </div>
+                                </li>
+                                <li class="flex items-start">
+                                    <div class="w-6 h-6 bg-amber-900 rounded-full flex items-center justify-center mr-3 mt-1 flex-shrink-0">
+                                        <i class="fas fa-check text-amber-400 text-xs"></i>
+                                    </div>
+                                    <div>
+                                        <span class="font-bold text-amber-300">补给：</span>
+                                        <span class="text-gray-300">能量胶/士力架（上高地徒步用）、600ml 水壶、充电宝、纸质名片（叫车备用）。</span>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 4月30日 -->
+            <section id="day1" class="tab-content">
+                <div class="mb-8">
+                    <h2 class="text-2xl md:text-3xl font-bold mb-6 text-green-400 border-l-4 border-green-500 pl-4 font-orbitron">
+                        <i class="fas fa-calendar-day mr-2"></i>4月30日（周四）：南阿尔卑斯骑行 + 诹访湖日落
+                    </h2>
+                    <div class="bg-gray-800 border border-amber-800 rounded-lg p-4 mb-6">
+                        <div class="flex items-center">
+                            <i class="fas fa-info-circle text-amber-400 mr-2"></i>
+                            <p class="text-amber-300">【行程安排】</p>
+                        </div>
+                    </div>
+                    
+                    <!-- 垂直时间轴 -->
+                    <div class="timeline-container">
+                        <div class="timeline">
+                            <!-- 时间轴项目 -->
+                            <div class="timeline-item">
+                                <div class="timeline-marker bg-green-500"></div>
+                                <div class="timeline-content">
+                                    <div class="timeline-time text-green-400 font-bold">06:40</div>
+                                    <div class="timeline-title text-xl text-amber-300">从两国出发</div>
+                                    <div class="timeline-desc">搭乘总武线至御茶之水换乘。</div>
+                                </div>
+                            </div>
+                            
+                            <div class="timeline-item">
+                                <div class="timeline-marker bg-green-500"></div>
+                                <div class="timeline-content">
+                                    <div class="timeline-time text-green-400 font-bold">07:30</div>
+                                    <div class="timeline-title text-xl text-amber-300">新宿站</div>
+                                    <div class="timeline-desc">搭乘 特急 Azusa 3 号（早餐在站台买便当车上吃）。</div>
+                                </div>
+                            </div>
+                            
+                            <div class="timeline-item">
+                                <div class="timeline-marker bg-green-500"></div>
+                                <div class="timeline-content">
+                                    <div class="timeline-time text-green-400 font-bold">09:22</div>
+                                    <div class="timeline-title text-xl text-amber-300">抵达小渊泽站</div>
+                                    <div class="timeline-desc"></div>
+                                </div>
+                            </div>
+                            
+                            <div class="timeline-item">
+                                <div class="timeline-marker bg-amber-500"></div>
+                                <div class="timeline-content">
+                                    <div class="timeline-time text-amber-400 font-bold">09:35</div>
+                                    <div class="timeline-title text-xl text-amber-300">COGICOGI 扫码租赁电动自行车</div>
+                                    <div class="timeline-desc">站外扫码租赁电动自行车（E-bike）。</div>
+                                </div>
+                            </div>
+                            
+                            <div class="timeline-item">
+                                <div class="timeline-marker bg-amber-500"></div>
+                                <div class="timeline-content">
+                                    <div class="timeline-time text-amber-400 font-bold">10:15</div>
+                                    <div class="timeline-title text-xl text-amber-300">尾白川溪谷徒步</div>
+                                    <div class="timeline-desc">骑行 9.5km 抵达尾白川溪谷，锁车，开始溪谷徒步（神态吊桥-千层潭折返）。</div>
+                                </div>
+                            </div>
+                            
+                            <div class="timeline-item">
+                                <div class="timeline-marker bg-amber-500"></div>
+                                <div class="timeline-content">
+                                    <div class="timeline-time text-amber-400 font-bold">12:30</div>
+                                    <div class="timeline-title text-xl text-amber-300">结束徒步，骑车回车站</div>
+                                    <div class="timeline-desc">全是下坡，很爽。</div>
+                                </div>
+                            </div>
+                            
+                            <div class="timeline-item">
+                                <div class="timeline-marker bg-green-500"></div>
+                                <div class="timeline-content">
+                                    <div class="timeline-time text-green-400 font-bold">13:10</div>
+                                    <div class="timeline-title text-xl text-amber-300">还车，前往上诹访站</div>
+                                    <div class="timeline-desc">搭乘 JR 普通列车前往上诹访站（约 20 分钟）。</div>
+                                </div>
+                            </div>
+                            
+                            <div class="timeline-item">
+                                <div class="timeline-marker bg-red-500"></div>
+                                <div class="timeline-content">
+                                    <div class="timeline-time text-red-400 font-bold">13:35</div>
+                                    <div class="timeline-title text-xl text-amber-300">抵达上诹访站</div>
+                                    <div class="timeline-desc"></div>
+                                </div>
+                            </div>
+                            
+                            <div class="timeline-item">
+                                <div class="timeline-marker bg-red-500"></div>
+                                <div class="timeline-content">
+                                    <div class="timeline-time text-red-400 font-bold">13:45</div>
+                                    <div class="timeline-title text-xl text-amber-300">【午餐】鳗鱼饭</div>
+                                    <div class="timeline-desc">イール亭おおいし（必须在 14:00 前冲进店里）。</div>
+                                </div>
+                            </div>
+                            
+                            <div class="timeline-item">
+                                <div class="timeline-marker bg-blue-500"></div>
+                                <div class="timeline-content">
+                                    <div class="timeline-time text-blue-400 font-bold">14:45</div>
+                                    <div class="timeline-title text-xl text-amber-300">诹访湖边散步</div>
+                                    <div class="timeline-desc">泡免费足汤缓解腿部疲劳。</div>
+                                </div>
+                            </div>
+                            
+                            <div class="timeline-item">
+                                <div class="timeline-marker bg-blue-500"></div>
+                                <div class="timeline-content">
+                                    <div class="timeline-time text-blue-400 font-bold">16:30</div>
+                                    <div class="timeline-title text-xl text-amber-300">前往立石公园</div>
+                                    <div class="timeline-desc">打车或步行前往（建议打车省力）。</div>
+                                </div>
+                            </div>
+                            
+                            <div class="timeline-item">
+                                <div class="timeline-marker bg-purple-500"></div>
+                                <div class="timeline-content">
+                                    <div class="timeline-time text-purple-400 font-bold">18:30</div>
+                                    <div class="timeline-title text-xl text-amber-300">欣赏诹访湖日落</div>
+                                    <div class="timeline-desc">"你的名字"同款诹访湖日落。</div>
+                                </div>
+                            </div>
+                            
+                            <div class="timeline-item">
+                                <div class="timeline-marker bg-green-500"></div>
+                                <div class="timeline-content">
+                                    <div class="timeline-time text-green-400 font-bold">19:15</div>
+                                    <div class="timeline-title text-xl text-amber-300">前往松本站</div>
+                                    <div class="timeline-desc">搭乘 JR 普通列车前往松本站。</div>
+                                </div>
+                            </div>
+                            
+                            <div class="timeline-item">
+                                <div class="timeline-marker bg-green-500"></div>
+                                <div class="timeline-content">
+                                    <div class="timeline-time text-green-400 font-bold">20:00</div>
+                                    <div class="timeline-title text-xl text-amber-300">入住 ALPICO PLAZA HOTEL</div>
+                                    <div class="timeline-desc"></div>
+                                </div>
+                            </div>
+                            
+                            <div class="timeline-item">
+                                <div class="timeline-marker bg-green-500"></div>
+                                <div class="timeline-content">
+                                    <div class="timeline-time text-green-400 font-bold">20:30</div>
+                                    <div class="timeline-title text-xl text-amber-300">【晚餐】松本站便当</div>
+                                    <div class="timeline-desc">便利店补给，酒店大浴场泡澡，早睡。</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 5月1日 -->
+            <section id="day2" class="tab-content">
+                <div class="mb-8">
+                    <h2 class="text-2xl md:text-3xl font-bold mb-6 text-green-400 border-l-4 border-green-500 pl-4 font-orbitron">
+                        <i class="fas fa-calendar-day mr-2"></i>5月1日（周五）：上高地 15km 极限拉练
+                    </h2>
+                    <div class="bg-gray-800 border border-amber-800 rounded-lg p-4 mb-6">
+                        <div class="flex items-center">
+                            <i class="fas fa-info-circle text-amber-400 mr-2"></i>
+                            <p class="text-amber-300">【行程安排】</p>
+                        </div>
+                    </div>
+                    
+                    <!-- 垂直时间轴 -->
+                    <div class="timeline-container">
+                        <div class="timeline">
+                            <!-- 时间轴项目 -->
+                            <div class="timeline-item">
+                                <div class="timeline-marker bg-green-500"></div>
+                                <div class="timeline-content">
+                                    <div class="timeline-time text-green-400 font-bold">06:30</div>
+                                    <div class="timeline-title text-xl text-amber-300">酒店退房</div>
+                                    <div class="timeline-desc">行李寄存柜台（或寄存车站）。</div>
+                                </div>
+                            </div>
+                            
+                            <div class="timeline-item">
+                                <div class="timeline-marker bg-green-500"></div>
+                                <div class="timeline-content">
+                                    <div class="timeline-time text-green-400 font-bold">07:15</div>
+                                    <div class="timeline-title text-xl text-amber-300">松本站出发</div>
+                                    <div class="timeline-desc">搭乘松本电铁（刷西瓜卡）。</div>
+                                </div>
+                            </div>
+                            
+                            <div class="timeline-item">
+                                <div class="timeline-marker bg-green-500"></div>
+                                <div class="timeline-content">
+                                    <div class="timeline-time text-green-400 font-bold">07:45</div>
+                                    <div class="timeline-title text-xl text-amber-300">抵达新岛岛站</div>
+                                    <div class="timeline-desc">直接换乘巴士。</div>
+                                </div>
+                            </div>
+                            
+                            <div class="timeline-item">
+                                <div class="timeline-marker bg-amber-500"></div>
+                                <div class="timeline-content">
+                                    <div class="timeline-time text-amber-400 font-bold">08:00</div>
+                                    <div class="timeline-title text-xl text-amber-300">【进山巴士】准时发车</div>
+                                    <div class="timeline-desc">已预定。</div>
+                                </div>
+                            </div>
+                            
+                            <div class="timeline-item">
+                                <div class="timeline-marker bg-red-500"></div>
+                                <div class="timeline-content">
+                                    <div class="timeline-time text-red-400 font-bold">08:50</div>
+                                    <div class="timeline-title text-xl text-amber-300">【大正池站】下车</div>
+                                    <div class="timeline-desc">开始 15km 拉练。</div>
+                                </div>
+                            </div>
+                            
+                            <div class="timeline-item">
+                                <div class="timeline-marker bg-blue-500"></div>
+                                <div class="timeline-content">
+                                    <div class="timeline-time text-blue-400 font-bold">徒步路线</div>
+                                    <div class="timeline-title text-xl text-amber-300">大正池 → 田代池 → 河童桥 → 明神池 → 德泽 (折返点) → 上高地巴士总站</div>
+                                    <div class="timeline-desc">全程15km平地徒步。</div>
+                                </div>
+                            </div>
+                            
+                            <div class="timeline-item">
+                                <div class="timeline-marker bg-purple-500"></div>
+                                <div class="timeline-content">
+                                    <div class="timeline-time text-purple-400 font-bold">12:30</div>
+                                    <div class="timeline-title text-xl text-amber-300">【午餐】德泽园</div>
+                                    <div class="timeline-desc">吃咖喱饭或特产冰淇淋（非常有名的补给站）。</div>
+                                </div>
+                            </div>
+                            
+                            <div class="timeline-item">
+                                <div class="timeline-marker bg-green-500"></div>
+                                <div class="timeline-content">
+                                    <div class="timeline-time text-green-400 font-bold">15:30</div>
+                                    <div class="timeline-title text-xl text-amber-300">抵达上高地巴士总站</div>
+                                    <div class="timeline-desc">提早 30 分钟到达。</div>
+                                </div>
+                            </div>
+                            
+                            <div class="timeline-item">
+                                <div class="timeline-marker bg-amber-500"></div>
+                                <div class="timeline-content">
+                                    <div class="timeline-time text-amber-400 font-bold">16:00</div>
+                                    <div class="timeline-title text-xl text-amber-300">【回程巴士】准时发车</div>
+                                    <div class="timeline-desc">已预定，联运票。</div>
+                                </div>
+                            </div>
+                            
+                            <div class="timeline-item">
+                                <div class="timeline-marker bg-green-500"></div>
+                                <div class="timeline-content">
+                                    <div class="timeline-time text-green-400 font-bold">17:05</div>
+                                    <div class="timeline-title text-xl text-amber-300">抵达新岛岛站</div>
+                                    <div class="timeline-desc">自动衔接电车。</div>
+                                </div>
+                            </div>
+                            
+                            <div class="timeline-item">
+                                <div class="timeline-marker bg-green-500"></div>
+                                <div class="timeline-content">
+                                    <div class="timeline-time text-green-400 font-bold">17:52</div>
+                                    <div class="timeline-title text-xl text-amber-300">回到松本站</div>
+                                    <div class="timeline-desc"></div>
+                                </div>
+                            </div>
+                            
+                            <div class="timeline-item">
+                                <div class="timeline-marker bg-red-500"></div>
+                                <div class="timeline-content">
+                                    <div class="timeline-time text-red-400 font-bold">17:55 - 18:10</div>
+                                    <div class="timeline-title text-xl text-amber-300">黄金 15 分钟</div>
+                                    <div class="timeline-desc">取行李，在 NewDays 抢购晚餐便当和信州苹果汁/啤酒。</div>
+                                </div>
+                            </div>
+                            
+                            <div class="timeline-item">
+                                <div class="timeline-marker bg-amber-500"></div>
+                                <div class="timeline-content">
+                                    <div class="timeline-time text-amber-400 font-bold">18:12</div>
+                                    <div class="timeline-title text-xl text-amber-300">搭乘 特急 Azusa 50 号</div>
+                                    <div class="timeline-desc">返回新宿。</div>
+                                </div>
+                            </div>
+                            
+                            <div class="timeline-item">
+                                <div class="timeline-marker bg-green-500"></div>
+                                <div class="timeline-content">
+                                    <div class="timeline-time text-green-400 font-bold">20:45</div>
+                                    <div class="timeline-title text-xl text-amber-300">抵达新宿</div>
+                                    <div class="timeline-desc">回两国，拉练圆满结束。</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 战术指南 -->
+            <section id="guide" class="tab-content">
+                <div class="mb-8">
+                    <h2 class="text-2xl md:text-3xl font-bold mb-6 text-green-400 border-l-4 border-green-500 pl-4 font-orbitron">
+                        <i class="fas fa-tactical mr-2"></i>战术补给与防坑指南
+                    </h2>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <!-- 关于吃饭 -->
+                        <div class="bg-gray-800 border border-amber-800 rounded-lg p-6">
+                            <div class="flex items-center mb-4">
+                                <div class="w-10 h-10 bg-red-900 rounded-full flex items-center justify-center mr-3">
+                                    <i class="fas fa-utensils text-red-400 text-xl"></i>
+                                </div>
+                                <h3 class="text-xl font-bold text-amber-300 font-orbitron">关于吃饭</h3>
+                            </div>
+                            <ul class="space-y-4">
+                                <li class="flex items-start">
+                                    <div class="w-6 h-6 bg-red-900 rounded-full flex items-center justify-center mr-3 mt-1 flex-shrink-0">
+                                        <i class="fas fa-exclamation-triangle text-red-400 text-xs"></i>
+                                    </div>
+                                    <div>
+                                        <span class="font-bold text-red-300">第一天中午的鳗鱼饭：</span>
+                                        <span class="text-gray-300">是当天的灵魂，一定要掐准小渊泽回来的电车时间。</span>
+                                    </div>
+                                </li>
+                                <li class="flex items-start">
+                                    <div class="w-6 h-6 bg-green-900 rounded-full flex items-center justify-center mr-3 mt-1 flex-shrink-0">
+                                        <i class="fas fa-ice-cream text-green-400 text-xs"></i>
+                                    </div>
+                                    <div>
+                                        <span class="font-bold text-green-300">第二天的德泽：</span>
+                                        <span class="text-gray-300">是你的目标，那里的冰淇淋是给走完 10 公里的你最好的奖励。</span>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <!-- 关于温差 -->
+                        <div class="bg-gray-800 border border-amber-800 rounded-lg p-6">
+                            <div class="flex items-center mb-4">
+                                <div class="w-10 h-10 bg-blue-900 rounded-full flex items-center justify-center mr-3">
+                                    <i class="fas fa-temperature-low text-blue-400 text-xl"></i>
+                                </div>
+                                <h3 class="text-xl font-bold text-amber-300 font-orbitron">关于温差</h3>
+                            </div>
+                            <ul class="space-y-4">
+                                <li class="flex items-start">
+                                    <div class="w-6 h-6 bg-blue-900 rounded-full flex items-center justify-center mr-3 mt-1 flex-shrink-0">
+                                        <i class="fas fa-mountain text-blue-400 text-xs"></i>
+                                    </div>
+                                    <div>
+                                        <span class="font-bold text-blue-300">上高地海拔 1500 米：</span>
+                                        <span class="text-gray-300">5 月 1 日早晨可能只有 5-8 度，徒步中会热，停下会冷。穿脱方便的拉链层是核心。</span>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <!-- 关于体力 -->
+                        <div class="bg-gray-800 border border-amber-800 rounded-lg p-6">
+                            <div class="flex items-center mb-4">
+                                <div class="w-10 h-10 bg-amber-900 rounded-full flex items-center justify-center mr-3">
+                                    <i class="fas fa-running text-amber-400 text-xl"></i>
+                                </div>
+                                <h3 class="text-xl font-bold text-amber-300 font-orbitron">关于体力</h3>
+                            </div>
+                            <ul class="space-y-4">
+                                <li class="flex items-start">
+                                    <div class="w-6 h-6 bg-amber-900 rounded-full flex items-center justify-center mr-3 mt-1 flex-shrink-0">
+                                        <i class="fas fa-heartbeat text-amber-400 text-xs"></i>
+                                    </div>
+                                    <div>
+                                        <span class="font-bold text-amber-300">第二天是 15km 平地：</span>
+                                        <span class="text-gray-300">第一天是骑行+山路。如果第一天觉得太累，第二天到河童桥后可以视情况放弃"德泽"折返点，就在明神池转转，不要硬撑。</span>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <!-- 关于应急 -->
+                        <div class="bg-gray-800 border border-amber-800 rounded-lg p-6">
+                            <div class="flex items-center mb-4">
+                                <div class="w-10 h-10 bg-purple-900 rounded-full flex items-center justify-center mr-3">
+                                    <i class="fas fa-first-aid text-purple-400 text-xl"></i>
+                                </div>
+                                <h3 class="text-xl font-bold text-amber-300 font-orbitron">关于应急</h3>
+                            </div>
+                            <ul class="space-y-4">
+                                <li class="flex items-start">
+                                    <div class="w-6 h-6 bg-purple-900 rounded-full flex items-center justify-center mr-3 mt-1 flex-shrink-0">
+                                        <i class="fas fa-pills text-purple-400 text-xs"></i>
+                                    </div>
+                                    <div>
+                                        <span class="font-bold text-purple-300">随身携带：</span>
+                                        <span class="text-gray-300">一小袋电解质冲剂，以及士力架，能量棒等。</span>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- 战术终端底部 -->
+    <footer class="bg-black border-t-2 border-green-700 py-6 px-4 mt-8">
+        <div class="container mx-auto">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <div class="mb-4 md:mb-0">
+                    <p class="text-green-400 font-share-tech">GW旅行战术计划 © 2026 - 特种部队作战终端</p>
+                    <p class="text-gray-500 text-sm">设计用于移动设备战术查看 | 双击 index.html 即可部署</p>
+                </div>
+                <div class="flex space-x-4">
+                    <div class="text-center">
+                        <div class="w-10 h-10 bg-gray-800 border border-green-700 rounded-full flex items-center justify-center mx-auto">
+                            <i class="fas fa-mobile-alt text-green-400"></i>
+                        </div>
+                        <p class="text-xs text-gray-400 mt-1">移动优化</p>
+                    </div>
+                    <div class="text-center">
+                        <div class="w-10 h-10 bg-gray-800 border border-amber-700 rounded-full flex items-center justify-center mx-auto">
+                            <i class="fas fa-bolt text-amber-400"></i>
+                        </div>
+                        <p class="text-xs text-gray-400 mt-1">快速响应</p>
+                    </div>
+                    <div class="text-center">
+                        <div class="w-10 h-10 bg-gray-800 border border-red-700 rounded-full flex items-center justify-center mx-auto">
+                            <i class="fas fa-shield-alt text-red-400"></i>
+                        </div>
+                        <p class="text-xs text-gray-400 mt-1">战术可靠</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
