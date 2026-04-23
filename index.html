@@ -14,6 +14,10 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <!-- Leaflet JS -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <!-- 自定义JavaScript -->
     <script src="script.js" defer></script>
 </head>
@@ -321,6 +325,14 @@
                             </div>
                         </div>
                     </div>
+                    
+                    <!-- 4月30日地图 -->
+                    <div class="mt-8">
+                        <h3 class="text-xl font-bold mb-4 text-amber-300 font-orbitron">
+                            <i class="fas fa-map-marked-alt mr-2"></i>作战地图
+                        </h3>
+                        <div id="map-day1" class="rounded-lg border border-amber-700"></div>
+                    </div>
                 </div>
             </section>
 
@@ -467,6 +479,14 @@
                                 </div>
                             </div>
                         </div>
+                    </div>
+                    
+                    <!-- 5月1日地图 -->
+                    <div class="mt-8">
+                        <h3 class="text-xl font-bold mb-4 text-amber-300 font-orbitron">
+                            <i class="fas fa-map-marked-alt mr-2"></i>作战地图
+                        </h3>
+                        <div id="map-day2" class="rounded-lg border border-amber-700"></div>
                     </div>
                 </div>
             </section>

@@ -1,20 +1,5 @@
 // GW旅行战术计划 - 特种部队终端交互脚本
-document.addEventListener('DOMContentLoaded', function() {
-    // 初始化标签页切换
-    initTabSwitching();
-    
-    // 初始化时间轴动画
-    initTimelineAnimation();
-    
-    // 初始化战术终端效果
-    initTacticalEffects();
-    
-    // 显示加载完成状态
-    setTimeout(() => {
-        updateStatus('任务系统已上线', 'green');
-        console.log('GW旅行战术计划终端已启动 - 所有系统正常');
-    }, 1000);
-});
+// 所有初始化在文件末尾统一执行
 
 // 标签页切换功能
 function initTabSwitching() {
@@ -238,3 +223,371 @@ function detectDevice() {
 
 // 初始化设备检测
 detectDevice();
+
+// ==========================================
+// Leaflet 地图功能 - 战术路书 v2.0
+// ==========================================
+
+// 精确坐标数据（通过 Overpass API 查询获取）
+const COORDS = {
+    // 4月30日 - 尾白川/诹访湖区域
+    '小淵沢駅': [35.8615, 138.3167],
+    '尾白川渓谷 駐車場': [35.7973, 138.2983],
+    '竹宇駒ヶ岳神社': [35.7947, 138.2871],
+    '神蛇滝': [35.7861, 138.2664],
+    '千ヶ淵': [35.7909, 138.2741],
+    '上諏訪駅': [36.0486, 138.1144],
+    '諏訪湖': [36.0483, 138.1133],
+    '立石公園': [36.0583, 138.1033],
+    '松本駅': [36.2308, 137.9642],
+    'ALPICO PLAZA HOTEL': [36.2315, 137.9630],
+    
+    // 5月1日 - 上高地区域
+    '新島々駅': [36.1950, 137.8550],
+    '大正池': [36.2284, 137.6197],
+    '田代池': [36.2357, 137.6244],
+    '河童橋': [36.2488, 137.6378],
+    '明神池': [36.2540, 137.6638],
+    '徳沢': [36.2600, 137.6900],
+    '上高地バスターミナル': [36.2450, 137.6310],
+    
+    // 其他
+    '両国': [35.6950, 139.7930],
+    '新宿': [35.6895, 139.7004],
+    '御茶ノ水': [35.6995, 139.7650]
+};
+
+// ==========================================
+// 4月30日 尾白川环线路线
+// ==========================================
+// 去程：駐車場 → 竹宇駒ヶ岳神社 → 千ヶ淵 → 神蛇滝（瀑布折返）
+// 回程（尾根道/山脊撤退路线）：神蛇滝 → 山脊路 → 駐車場
+
+// 去程路线（沿溪谷）
+const ROUTE_DAY1_GO = [
+    [35.7973, 138.2983], // 駐車場
+    [35.7947, 138.2871], // 竹宇駒ヶ岳神社
+    [35.7909, 138.2741], // 千ヶ淵
+    [35.7861, 138.2664], // 神蛇滝（折返点）
+];
+
+// 回程路线（尾根道/山脊撤退路线 - 虚线）
+const ROUTE_DAY1_RETREAT = [
+    [35.7861, 138.2664], // 神蛇滝
+    [35.7880, 138.2700], // 山脊入口
+    [35.7915, 138.2780], // 尾根道中段
+    [35.7940, 138.2850], // 尾根道高处
+    [35.7973, 138.2983], // 駐車場
+];
+
+// 整体行程路线（骑行+火车）
+const ROUTE_DAY1_TRANSIT = [
+    [35.8615, 138.3167], // 小淵沢駅
+    [35.7973, 138.2983], // 尾白川渓谷
+    [35.8615, 138.3167], // 小淵沢駅
+    [36.0486, 138.1144], // 上諏訪駅
+    [36.0483, 138.1133], // 諏訪湖
+    [36.0583, 138.1033], // 立石公園
+    [36.2308, 137.9642], // 松本駅
+];
+
+// ==========================================
+// 5月1日 上高地徒步路线
+// ==========================================
+const ROUTE_DAY2 = [
+    [36.2284, 137.6197], // 大正池
+    [36.2357, 137.6244], // 田代池
+    [36.2488, 137.6378], // 河童橋
+    [36.2540, 137.6638], // 明神池
+    [36.2600, 137.6900], // 徳沢
+    [36.2600, 137.6900], // 徳沢（折返）
+    [36.2540, 137.6638], // 明神池
+    [36.2488, 137.6378], // 河童橋
+    [36.2450, 137.6310], // 上高地バスターミナル
+];
+
+// 梓川流向多边形（蓝色半透明遮罩）
+const AZUSA_RIVER_POLYGON = [
+    [36.2284, 137.6197], // 大正池起点
+    [36.2320, 137.6210],
+    [36.2380, 137.6250],
+    [36.2420, 137.6300],
+    [36.2488, 137.6378], // 河童橋
+    [36.2520, 137.6450],
+    [36.2540, 137.6550],
+    [36.2560, 137.6650],
+    [36.2580, 137.6800],
+    [36.2600, 137.6900], // 徳沢
+    [36.2580, 137.6880],
+    [36.2550, 137.6700],
+    [36.2520, 137.6550],
+    [36.2488, 137.6400],
+    [36.2450, 137.6330],
+    [36.2400, 137.6280],
+    [36.2350, 137.6230],
+    [36.2300, 137.6180],
+    [36.2284, 137.6197], // 闭合
+];
+
+// ==========================================
+// 自定义图标 - 战术风格
+// ==========================================
+function createTacticalIcon(color, label, isObjective) {
+    const colors = {
+        green: '#22c55e',
+        amber: '#f59e0b',
+        red: '#ef4444',
+        blue: '#3b82f6',
+        purple: '#a855f7',
+        cyan: '#06b6d4'
+    };
+    const hexColor = colors[color] || '#22c55e';
+    
+    // 目标点使用更大的标记
+    const size = isObjective ? 24 : 16;
+    const glowSize = isObjective ? '0 0 16px' : '0 0 8px';
+    
+    return L.divIcon({
+        className: 'tactical-marker',
+        html: `<div style="
+            width: ${size}px; height: ${size}px;
+            background: ${hexColor};
+            border: ${isObjective ? '3px' : '2px'} solid #000;
+            border-radius: 50%;
+            box-shadow: ${glowSize} ${hexColor}80;
+            ${isObjective ? 'animation: tactical-pulse 2s infinite;' : ''}
+        "></div>`,
+        iconSize: [size, size],
+        iconAnchor: [size/2, size/2],
+        popupAnchor: [0, -size/2 - 5]
+    });
+}
+
+// ==========================================
+// 战术风格弹窗
+// ==========================================
+function createTacticalPopup(label, time, desc, isObjective) {
+    const objectiveBadge = isObjective ? `
+        <div style="
+            margin-top: 6px; padding: 3px 8px;
+            background: rgba(34, 197, 94, 0.2);
+            border: 1px solid #22c55e;
+            border-radius: 3px;
+            font-size: 11px;
+            color: #22c55e;
+            text-align: center;
+        ">
+            ✓ 抵达即完成目标
+        </div>
+    ` : '';
+    
+    return `
+        <div style="
+            background: #0f172a;
+            color: #f59e0b;
+            font-family: 'Share Tech Mono', monospace;
+            padding: 10px 14px;
+            border: 1px solid ${isObjective ? '#22c55e' : '#f59e0b'};
+            border-radius: 4px;
+            font-size: 13px;
+            min-width: 160px;
+        ">
+            <div style="display: flex; align-items: center; margin-bottom: 4px;">
+                <div style="
+                    width: 8px; height: 8px;
+                    background: ${isObjective ? '#22c55e' : '#f59e0b'};
+                    border-radius: 50%;
+                    margin-right: 8px;
+                    box-shadow: 0 0 6px ${isObjective ? '#22c55e' : '#f59e0b'}80;
+                "></div>
+                <strong style="color: ${isObjective ? '#22c55e' : '#f59e0b'}; font-size: 14px;">${label}</strong>
+            </div>
+            ${time ? `<div style="color: #9ca3af; margin-left: 16px; font-size: 12px;">⏱ ${time}</div>` : ''}
+            ${desc ? `<div style="color: #d1d5db; margin-left: 16px; font-size: 12px; margin-top: 2px;">${desc}</div>` : ''}
+            ${objectiveBadge}
+        </div>
+    `;
+}
+
+// ==========================================
+// 初始化地图（通用）
+// ==========================================
+function initMap(containerId, center, zoom, markers, routes, overlays) {
+    const map = L.map(containerId, {
+        center: center,
+        zoom: zoom,
+        zoomControl: true,
+        attributionControl: false
+    });
+    
+    // 暗色地图瓦片（CartoDB DarkMatter - 战术风格）
+    L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
+        maxZoom: 19,
+        subdomains: 'abcd'
+    }).addTo(map);
+    
+    // 添加覆盖层（如梓川蓝色遮罩）
+    if (overlays) {
+        overlays.forEach(o => {
+            if (o.type === 'polygon' && o.coords.length > 0) {
+                L.polygon(o.coords, {
+                    color: o.color || '#06b6d4',
+                    fillColor: o.fillColor || '#06b6d4',
+                    fillOpacity: o.fillOpacity || 0.08,
+                    weight: o.weight || 0,
+                    opacity: 0
+                }).addTo(map);
+            }
+        });
+    }
+    
+    // 添加路线
+    if (routes) {
+        routes.forEach(r => {
+            if (r.coords && r.coords.length > 0) {
+                L.polyline(r.coords, {
+                    color: r.color || '#22c55e',
+                    weight: r.weight || 3,
+                    opacity: r.opacity || 0.7,
+                    dashArray: r.dashArray || null
+                }).addTo(map);
+            }
+        });
+    }
+    
+    // 添加标记
+    markers.forEach(m => {
+        const marker = L.marker(m.coords, {
+            icon: createTacticalIcon(m.color, m.label, m.isObjective)
+        }).addTo(map);
+        
+        marker.bindPopup(
+            createTacticalPopup(m.label, m.time, m.desc, m.isObjective),
+            {
+                closeButton: false,
+                className: 'tactical-popup',
+                offset: [0, -5]
+            }
+        );
+    });
+    
+    // 延迟刷新地图（解决隐藏标签页渲染问题）
+    setTimeout(() => {
+        map.invalidateSize();
+    }, 500);
+    
+    return map;
+}
+
+// ==========================================
+// 初始化4月30日地图 - 尾白川环线
+// ==========================================
+function initDay1Map() {
+    const markers = [
+        { coords: COORDS['小淵沢駅'], label: '小淵沢駅', time: '09:22', color: 'green', desc: '特急Azusa 3号抵达' },
+        { coords: COORDS['尾白川渓谷 駐車場'], label: '尾白川渓谷 駐車場', time: '10:15', color: 'amber', desc: 'E-bike骑行9.5km' },
+        { coords: COORDS['竹宇駒ヶ岳神社'], label: '竹宇駒ヶ岳神社', time: '10:30', color: 'green', desc: '徒步起点' },
+        { coords: COORDS['千ヶ淵'], label: '千ヶ淵', time: '11:15', color: 'blue', desc: '溪谷中段' },
+        { coords: COORDS['神蛇滝'], label: '★ 神蛇滝', time: '11:45', color: 'red', desc: '瀑布折返点', isObjective: true },
+        { coords: COORDS['上諏訪駅'], label: '上諏訪駅', time: '13:35', color: 'red', desc: '鳗鱼饭午餐' },
+        { coords: COORDS['諏訪湖'], label: '諏訪湖', time: '14:45', color: 'blue', desc: '足汤+散步' },
+        { coords: COORDS['立石公園'], label: '立石公園', time: '18:30', color: 'purple', desc: '你的名字同款日落' },
+        { coords: COORDS['松本駅'], label: '松本駅', time: '19:15', color: 'green', desc: '前往酒店' },
+    ];
+    
+    const routes = [
+        // 去程：荧光绿实线（沿溪谷）
+        { coords: ROUTE_DAY1_GO, color: '#22c55e', weight: 4, opacity: 0.8 },
+        // 回程：荧光绿虚线（尾根道/山脊撤退路线）
+        { coords: ROUTE_DAY1_RETREAT, color: '#22c55e', weight: 3, opacity: 0.6, dashArray: '8, 8' },
+        // 整体行程：琥珀色虚线
+        { coords: ROUTE_DAY1_TRANSIT, color: '#f59e0b', weight: 2, opacity: 0.5, dashArray: '6, 6' },
+    ];
+    
+    initMap('map-day1', [35.88, 138.22], 12, markers, routes);
+}
+
+// ==========================================
+// 初始化5月1日地图 - 上高地徒步
+// ==========================================
+function initDay2Map() {
+    const markers = [
+        { coords: COORDS['大正池'], label: '大正池', time: '08:50', color: 'red', desc: '徒步起点' },
+        { coords: COORDS['田代池'], label: '田代池', time: '09:30', color: 'blue', desc: '湿地区域' },
+        { coords: COORDS['河童橋'], label: '★ 河童橋', time: '10:30', color: 'cyan', desc: '上高地象征', isObjective: true },
+        { coords: COORDS['明神池'], label: '明神池', time: '11:30', color: 'blue', desc: '明神岳背景' },
+        { coords: COORDS['徳沢'], label: '徳沢', time: '12:30', color: 'purple', desc: '午餐+冰淇淋' },
+        { coords: COORDS['上高地バスターミナル'], label: '上高地BT', time: '15:30', color: 'green', desc: '回程巴士' },
+    ];
+    
+    const routes = [
+        // 徒步路线：亮蓝色实线
+        { coords: ROUTE_DAY2, color: '#06b6d4', weight: 4, opacity: 0.8 },
+    ];
+    
+    const overlays = [
+        // 梓川流向：蓝色半透明遮罩
+        { type: 'polygon', coords: AZUSA_RIVER_POLYGON, fillColor: '#06b6d4', fillOpacity: 0.08, color: '#06b6d4', weight: 0 },
+    ];
+    
+    initMap('map-day2', [36.245, 137.645], 14, markers, routes, overlays);
+}
+
+// 监听标签页切换，初始化地图
+function initMaps() {
+    // 监听标签页切换事件
+    const tabButtons = document.querySelectorAll('.tab-btn');
+    let mapsInitialized = { day1: false, day2: false };
+    
+    tabButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            const tabId = this.getAttribute('data-tab');
+            
+            if (tabId === 'day1' && !mapsInitialized.day1) {
+                setTimeout(() => {
+                    initDay1Map();
+                    mapsInitialized.day1 = true;
+                }, 300);
+            }
+            
+            if (tabId === 'day2' && !mapsInitialized.day2) {
+                setTimeout(() => {
+                    initDay2Map();
+                    mapsInitialized.day2 = true;
+                }, 300);
+            }
+        });
+    });
+    
+    // 如果默认显示day1，也初始化
+    const activeTab = document.querySelector('.tab-content.active');
+    if (activeTab && activeTab.id === 'day1' && !mapsInitialized.day1) {
+        setTimeout(() => {
+            initDay1Map();
+            mapsInitialized.day1 = true;
+        }, 500);
+    }
+    if (activeTab && activeTab.id === 'day2' && !mapsInitialized.day2) {
+        setTimeout(() => {
+            initDay2Map();
+            mapsInitialized.day2 = true;
+        }, 500);
+    }
+}
+
+// 在DOM加载完成后初始化地图
+document.addEventListener('DOMContentLoaded', function() {
+    // 原有的初始化
+    initTabSwitching();
+    initTimelineAnimation();
+    initTacticalEffects();
+    
+    // 地图初始化
+    initMaps();
+    
+    // 显示加载完成状态
+    setTimeout(() => {
+        updateStatus('任务系统已上线', 'green');
+        console.log('GW旅行战术计划终端已启动 - 所有系统正常');
+    }, 1000);
+});
