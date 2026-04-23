@@ -47,18 +47,21 @@
     <!-- 标签页切换 -->
     <div class="container mx-auto px-4 py-6">
         <div class="flex flex-wrap justify-center mb-8">
-            <div class="inline-flex rounded-lg border border-amber-700 bg-gray-800 p-1" role="tablist">
-                <button id="tab-preparation" class="tab-btn active px-6 py-3 rounded-md font-orbitron text-sm md:text-base transition-all duration-300" data-tab="preparation">
-                    <i class="fas fa-clipboard-list mr-2"></i>出发前准备
+            <div class="inline-flex flex-wrap justify-center rounded-lg border border-amber-700 bg-gray-800 p-1 gap-1" role="tablist">
+                <button id="tab-preparation" class="tab-btn active px-4 py-3 rounded-md font-orbitron text-xs md:text-sm transition-all duration-300" data-tab="preparation">
+                    <i class="fas fa-clipboard-list mr-1"></i>出发前准备
                 </button>
-                <button id="tab-day1" class="tab-btn px-6 py-3 rounded-md font-orbitron text-sm md:text-base transition-all duration-300" data-tab="day1">
-                    <i class="fas fa-biking mr-2"></i>4月30日
+                <button id="tab-day1" class="tab-btn px-4 py-3 rounded-md font-orbitron text-xs md:text-sm transition-all duration-300" data-tab="day1">
+                    <i class="fas fa-biking mr-1"></i>4月30日
                 </button>
-                <button id="tab-day2" class="tab-btn px-6 py-3 rounded-md font-orbitron text-sm md:text-base transition-all duration-300" data-tab="day2">
-                    <i class="fas fa-hiking mr-2"></i>5月1日
+                <button id="tab-day2" class="tab-btn px-4 py-3 rounded-md font-orbitron text-xs md:text-sm transition-all duration-300" data-tab="day2">
+                    <i class="fas fa-hiking mr-1"></i>5月1日
                 </button>
-                <button id="tab-guide" class="tab-btn px-6 py-3 rounded-md font-orbitron text-sm md:text-base transition-all duration-300" data-tab="guide">
-                    <i class="fas fa-book mr-2"></i>战术指南
+                <button id="tab-equipment" class="tab-btn px-4 py-3 rounded-md font-orbitron text-xs md:text-sm transition-all duration-300" data-tab="equipment">
+                    <i class="fas fa-boxes mr-1"></i>战术物资整备
+                </button>
+                <button id="tab-guide" class="tab-btn px-4 py-3 rounded-md font-orbitron text-xs md:text-sm transition-all duration-300" data-tab="guide">
+                    <i class="fas fa-book mr-1"></i>战术指南
                 </button>
             </div>
         </div>
@@ -491,44 +494,363 @@
                 </div>
             </section>
 
+            <!-- 战术物资整备 -->
+            <section id="equipment" class="tab-content">
+                <div class="mb-8">
+                    <h2 class="text-2xl md:text-3xl font-bold mb-2 text-green-400 border-l-4 border-green-500 pl-4 font-orbitron">
+                        <i class="fas fa-boxes mr-2"></i>战术物资整备
+                    </h2>
+                    <p class="text-gray-400 text-sm mb-4 ml-2 font-share-tech">Equipment Manifest · 点击复选框标记已装箱</p>
+                    
+                    <!-- 进度条 -->
+                    <div class="bg-gray-800 border border-amber-800 rounded-lg p-4 mb-6">
+                        <div class="flex justify-between items-center mb-2">
+                            <span class="text-amber-300 font-orbitron text-sm">
+                                <i class="fas fa-tasks mr-1"></i>整备进度
+                            </span>
+                            <span id="equipment-progress-text" class="text-green-400 font-share-tech text-sm">0%</span>
+                        </div>
+                        <div class="w-full bg-gray-700 rounded-full h-4 overflow-hidden border border-green-800">
+                            <div id="equipment-progress-bar" class="h-full bg-gradient-to-r from-green-600 via-amber-500 to-green-400 rounded-full transition-all duration-500" style="width: 0%"></div>
+                        </div>
+                        <div class="flex justify-between text-xs text-gray-500 mt-1 font-share-tech">
+                            <span>MISSION START</span>
+                            <span id="equipment-count-text">0 / 0 项已核对</span>
+                            <span>FULLY LOADED</span>
+                        </div>
+                    </div>
+
+                    <!-- CRT 扫描线容器 -->
+                    <div class="crt-container">
+                        <!-- 衣物系统 -->
+                        <div class="equip-category">
+                            <div class="equip-category-header">
+                                <i class="fas fa-tshirt mr-2"></i>衣物系统（洋葱式叠穿）
+                                <span class="text-xs text-gray-500 ml-2 font-share-tech">"冷启动，热运行"</span>
+                            </div>
+                            <div class="equip-category-body">
+                                <div class="equip-subcategory">上半身</div>
+                                <label class="equip-item">
+                                    <input type="checkbox" class="equip-checkbox" data-category="clothing">
+                                    <span class="equip-checkbox-custom"></span>
+                                    <span class="equip-item-text">
+                                        <span class="equip-item-name">速干衣（长袖/短袖）</span>
+                                        <span class="equip-item-meta">×2 · 绝对禁忌纯棉。1件穿着，1件备用。</span>
+                                    </span>
+                                </label>
+                                <label class="equip-item">
+                                    <input type="checkbox" class="equip-checkbox" data-category="clothing">
+                                    <span class="equip-checkbox-custom"></span>
+                                    <span class="equip-item-text">
+                                        <span class="equip-item-name">轻便抓绒衣/排骨羽绒服</span>
+                                        <span class="equip-item-meta">×1 · 中间保暖层。应对清晨骑行及立石公园日落。</span>
+                                    </span>
+                                </label>
+                                <label class="equip-item">
+                                    <input type="checkbox" class="equip-checkbox" data-category="clothing">
+                                    <span class="equip-checkbox-custom"></span>
+                                    <span class="equip-item-text">
+                                        <span class="equip-item-name">防风冲锋衣</span>
+                                        <span class="equip-item-meta">×1 · 外层防护。需具备防泼水功能。</span>
+                                    </span>
+                                </label>
+                                <div class="equip-subcategory">下半身</div>
+                                <label class="equip-item">
+                                    <input type="checkbox" class="equip-checkbox" data-category="clothing">
+                                    <span class="equip-checkbox-custom"></span>
+                                    <span class="equip-item-text">
+                                        <span class="equip-item-name">Montbell 徒步裤</span>
+                                        <span class="equip-item-meta">×1 · 单层穿着。不建议内加秋裤。</span>
+                                    </span>
+                                </label>
+                                <label class="equip-item">
+                                    <input type="checkbox" class="equip-checkbox" data-category="clothing">
+                                    <span class="equip-checkbox-custom"></span>
+                                    <span class="equip-item-text">
+                                        <span class="equip-item-name">透气运动内裤</span>
+                                        <span class="equip-item-meta">×2 · 速干面料，减少摩擦。</span>
+                                    </span>
+                                </label>
+                                <div class="equip-subcategory">足部</div>
+                                <label class="equip-item">
+                                    <input type="checkbox" class="equip-checkbox" data-category="clothing">
+                                    <span class="equip-checkbox-custom"></span>
+                                    <span class="equip-item-text">
+                                        <span class="equip-item-name">五指袜</span>
+                                        <span class="equip-item-meta">×2 · 贴身内层。预防脚趾间产生水泡。</span>
+                                    </span>
+                                </label>
+                                <label class="equip-item">
+                                    <input type="checkbox" class="equip-checkbox" data-category="clothing">
+                                    <span class="equip-checkbox-custom"></span>
+                                    <span class="equip-item-text">
+                                        <span class="equip-item-name">中厚羊毛徒步袜</span>
+                                        <span class="equip-item-meta">×2 · 外层缓冲。提供足部支撑。</span>
+                                    </span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- 头部配件 -->
+                        <div class="equip-category">
+                            <div class="equip-category-header" style="border-left-color: #f59e0b;">
+                                <i class="fas fa-hat-cowboy mr-2"></i>头部、配件与视力解决方案
+                            </div>
+                            <div class="equip-category-body">
+                                <label class="equip-item">
+                                    <input type="checkbox" class="equip-checkbox" data-category="head">
+                                    <span class="equip-checkbox-custom"></span>
+                                    <span class="equip-item-text">
+                                        <span class="equip-item-name">近视眼镜</span>
+                                        <span class="equip-item-meta">必须佩戴。请确保眼镜稳固。</span>
+                                    </span>
+                                </label>
+                                <label class="equip-item">
+                                    <input type="checkbox" class="equip-checkbox" data-category="head">
+                                    <span class="equip-checkbox-custom"></span>
+                                    <span class="equip-item-text">
+                                        <span class="equip-item-name">偏光挂片/套镜</span>
+                                        <span class="equip-item-meta">配合近视镜使用。应对残雪反光及诹访湖日照。</span>
+                                    </span>
+                                </label>
+                                <label class="equip-item">
+                                    <input type="checkbox" class="equip-checkbox" data-category="head">
+                                    <span class="equip-checkbox-custom"></span>
+                                    <span class="equip-item-text">
+                                        <span class="equip-item-name">户外遮阳帽</span>
+                                        <span class="equip-item-meta">带檐款。海拔高处紫外线极强，需物理遮挡。</span>
+                                    </span>
+                                </label>
+                                <label class="equip-item">
+                                    <input type="checkbox" class="equip-checkbox" data-category="head">
+                                    <span class="equip-checkbox-custom"></span>
+                                    <span class="equip-item-text">
+                                        <span class="equip-item-name">轻薄头巾 (Buff)</span>
+                                        <span class="equip-item-meta">护颈、挡风、吸汗多功能。</span>
+                                    </span>
+                                </label>
+                                <label class="equip-item">
+                                    <input type="checkbox" class="equip-checkbox" data-category="head">
+                                    <span class="equip-checkbox-custom"></span>
+                                    <span class="equip-item-text">
+                                        <span class="equip-item-name">轻薄防风手套</span>
+                                        <span class="equip-item-meta">4/30 早上从小渊泽站骑行去溪谷时防寒。</span>
+                                    </span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- 鞋包硬装 -->
+                        <div class="equip-category">
+                            <div class="equip-category-header" style="border-left-color: #ef4444;">
+                                <i class="fas fa-shoe-prints mr-2"></i>鞋包与硬装备
+                            </div>
+                            <div class="equip-category-body">
+                                <label class="equip-item">
+                                    <input type="checkbox" class="equip-checkbox" data-category="shoes">
+                                    <span class="equip-checkbox-custom"></span>
+                                    <span class="equip-item-text">
+                                        <span class="equip-item-name">中高帮徒步鞋</span>
+                                        <span class="equip-item-meta">必须是已磨合好的鞋款，提供脚踝锁定。</span>
+                                    </span>
+                                </label>
+                                <label class="equip-item">
+                                    <input type="checkbox" class="equip-checkbox" data-category="shoes">
+                                    <span class="equip-checkbox-custom"></span>
+                                    <span class="equip-item-text">
+                                        <span class="equip-item-name">25L - 30L 徒步包</span>
+                                        <span class="equip-item-meta">需带防雨罩。总负重建议控制在 6kg 以内。</span>
+                                    </span>
+                                </label>
+                                <label class="equip-item">
+                                    <input type="checkbox" class="equip-checkbox" data-category="shoes">
+                                    <span class="equip-checkbox-custom"></span>
+                                    <span class="equip-item-text">
+                                        <span class="equip-item-name">登山杖</span>
+                                        <span class="equip-item-meta">建议携带一对。可大幅减轻 15 公里长线下坡对膝盖的压力。</span>
+                                    </span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- 补给护理 -->
+                        <div class="equip-category">
+                            <div class="equip-category-header" style="border-left-color: #a855f7;">
+                                <i class="fas fa-kit-medical mr-2"></i>补给、护理与"回血"装备
+                            </div>
+                            <div class="equip-category-body">
+                                <label class="equip-item">
+                                    <input type="checkbox" class="equip-checkbox" data-category="supplies">
+                                    <span class="equip-checkbox-custom"></span>
+                                    <span class="equip-item-text">
+                                        <span class="equip-item-name">保温杯（优衣库款）</span>
+                                        <span class="equip-item-meta">400-500ml。用于寒冷早晨饮用温水。</span>
+                                    </span>
+                                </label>
+                                <label class="equip-item">
+                                    <input type="checkbox" class="equip-checkbox" data-category="supplies">
+                                    <span class="equip-checkbox-custom"></span>
+                                    <span class="equip-item-text">
+                                        <span class="equip-item-name">高热量路餐</span>
+                                        <span class="equip-item-meta">巧克力、士力架、SOYJOY 坚果棒。替代能量胶。</span>
+                                    </span>
+                                </label>
+                                <label class="equip-item">
+                                    <input type="checkbox" class="equip-checkbox" data-category="supplies">
+                                    <span class="equip-checkbox-custom"></span>
+                                    <span class="equip-item-text">
+                                        <span class="equip-item-name">防晒霜（安热沙金瓶/碧柔红管）</span>
+                                        <span class="equip-item-meta">出门前足量涂抹。</span>
+                                    </span>
+                                </label>
+                                <label class="equip-item">
+                                    <input type="checkbox" class="equip-checkbox" data-category="supplies">
+                                    <span class="equip-checkbox-custom"></span>
+                                    <span class="equip-item-text">
+                                        <span class="equip-item-name">防晒棒</span>
+                                        <span class="equip-item-meta">徒步中途不脏手补涂。</span>
+                                    </span>
+                                </label>
+                                <label class="equip-item">
+                                    <input type="checkbox" class="equip-checkbox" data-category="supplies">
+                                    <span class="equip-checkbox-custom"></span>
+                                    <span class="equip-item-text">
+                                        <span class="equip-item-name">润唇膏</span>
+                                        <span class="equip-item-meta">高海拔地区风大干燥，防止嘴唇干裂。</span>
+                                    </span>
+                                </label>
+                                <label class="equip-item">
+                                    <input type="checkbox" class="equip-checkbox" data-category="supplies">
+                                    <span class="equip-checkbox-custom"></span>
+                                    <span class="equip-item-text">
+                                        <span class="equip-item-name">小腿贴（休足时间）</span>
+                                        <span class="equip-item-meta">首日晚间贴于腿肚与脚底，加速次日体能恢复。</span>
+                                    </span>
+                                </label>
+                                <label class="equip-item">
+                                    <input type="checkbox" class="equip-checkbox" data-category="supplies">
+                                    <span class="equip-checkbox-custom"></span>
+                                    <span class="equip-item-text">
+                                        <span class="equip-item-name">个人急救包</span>
+                                        <span class="equip-item-meta">包含创可贴、消炎药、肌贴。</span>
+                                    </span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- 电子设备 -->
+                        <div class="equip-category">
+                            <div class="equip-category-header" style="border-left-color: #3b82f6;">
+                                <i class="fas fa-mobile-alt mr-2"></i>电子设备、证件与琐事
+                            </div>
+                            <div class="equip-category-body">
+                                <label class="equip-item">
+                                    <input type="checkbox" class="equip-checkbox" data-category="electronics">
+                                    <span class="equip-checkbox-custom"></span>
+                                    <span class="equip-item-text">
+                                        <span class="equip-item-name">智能手机</span>
+                                        <span class="equip-item-meta">确保安装 COGICOGI、YAMAP 或"两步路"（提前下载离线轨迹）。</span>
+                                    </span>
+                                </label>
+                                <label class="equip-item">
+                                    <input type="checkbox" class="equip-checkbox" data-category="electronics">
+                                    <span class="equip-checkbox-custom"></span>
+                                    <span class="equip-item-text">
+                                        <span class="equip-item-name">充电宝</span>
+                                        <span class="equip-item-meta">确保续航。</span>
+                                    </span>
+                                </label>
+                                <label class="equip-item">
+                                    <input type="checkbox" class="equip-checkbox" data-category="electronics">
+                                    <span class="equip-checkbox-custom"></span>
+                                    <span class="equip-item-text">
+                                        <span class="equip-item-name">Suica卡</span>
+                                        <span class="equip-item-meta">确保余额充足（建议 1.5 万日元以上）。</span>
+                                    </span>
+                                </label>
+                                <label class="equip-item">
+                                    <input type="checkbox" class="equip-checkbox" data-category="electronics">
+                                    <span class="equip-checkbox-custom"></span>
+                                    <span class="equip-item-text">
+                                        <span class="equip-item-name">零钱包（含现金与硬币）</span>
+                                        <span class="equip-item-meta">准备多枚 100 日元硬币，用于上高地收费厕所，用零钱包收纳以防散落。</span>
+                                    </span>
+                                </label>
+                                <label class="equip-item">
+                                    <input type="checkbox" class="equip-checkbox" data-category="electronics">
+                                    <span class="equip-checkbox-custom"></span>
+                                    <span class="equip-item-text">
+                                        <span class="equip-item-name">行程备份</span>
+                                        <span class="equip-item-meta">Azusa 特急券、上高地巴士预约单（电子/纸质）。</span>
+                                    </span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- 出发前夜确认 -->
+                        <div class="equip-category">
+                            <div class="equip-category-header" style="border-left-color: #06b6d4;">
+                                <i class="fas fa-moon mr-2"></i>出发前夜确认事项
+                            </div>
+                            <div class="equip-category-body">
+                                <label class="equip-item">
+                                    <input type="checkbox" class="equip-checkbox" data-category="preflight">
+                                    <span class="equip-checkbox-custom"></span>
+                                    <span class="equip-item-text">
+                                        <span class="equip-item-name">剪指甲</span>
+                                        <span class="equip-item-meta">剪平、剪短脚趾甲，防止长距离下坡造成黑指甲。</span>
+                                    </span>
+                                </label>
+                                <label class="equip-item">
+                                    <input type="checkbox" class="equip-checkbox" data-category="preflight">
+                                    <span class="equip-checkbox-custom"></span>
+                                    <span class="equip-item-text">
+                                        <span class="equip-item-name">气温复核</span>
+                                        <span class="equip-item-meta">查阅苹果天气中"北杜市"与"上高地"的实时预报。</span>
+                                    </span>
+                                </label>
+                                <label class="equip-item">
+                                    <input type="checkbox" class="equip-checkbox" data-category="preflight">
+                                    <span class="equip-checkbox-custom"></span>
+                                    <span class="equip-item-text">
+                                        <span class="equip-item-name">预打包</span>
+                                        <span class="equip-item-meta">4/29 晚完成打包，确认总重。</span>
+                                    </span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
             <!-- 战术指南 -->
             <section id="guide" class="tab-content">
                 <div class="mb-8">
                     <h2 class="text-2xl md:text-3xl font-bold mb-6 text-green-400 border-l-4 border-green-500 pl-4 font-orbitron">
-                        <i class="fas fa-tactical mr-2"></i>战术补给与防坑指南
+                        <i class="fas fa-book mr-2"></i>战术补给与防坑指南
                     </h2>
                     
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <!-- 关于吃饭 -->
                         <div class="bg-gray-800 border border-amber-800 rounded-lg p-6">
                             <div class="flex items-center mb-4">
-                                <div class="w-10 h-10 bg-red-900 rounded-full flex items-center justify-center mr-3">
-                                    <i class="fas fa-utensils text-red-400 text-xl"></i>
+                                <div class="w-10 h-10 bg-amber-900 rounded-full flex items-center justify-center mr-3">
+                                    <i class="fas fa-utensils text-amber-400 text-xl"></i>
                                 </div>
                                 <h3 class="text-xl font-bold text-amber-300 font-orbitron">关于吃饭</h3>
                             </div>
-                            <ul class="space-y-4">
+                            <ul class="space-y-3 text-gray-300">
                                 <li class="flex items-start">
-                                    <div class="w-6 h-6 bg-red-900 rounded-full flex items-center justify-center mr-3 mt-1 flex-shrink-0">
-                                        <i class="fas fa-exclamation-triangle text-red-400 text-xs"></i>
-                                    </div>
-                                    <div>
-                                        <span class="font-bold text-red-300">第一天中午的鳗鱼饭：</span>
-                                        <span class="text-gray-300">是当天的灵魂，一定要掐准小渊泽回来的电车时间。</span>
-                                    </div>
+                                    <i class="fas fa-chevron-right text-amber-500 mt-1 mr-2 flex-shrink-0"></i>
+                                    <span>第一天中午的鳗鱼饭是当天的灵魂，一定要掐准小渊泽回来的电车时间。</span>
                                 </li>
                                 <li class="flex items-start">
-                                    <div class="w-6 h-6 bg-green-900 rounded-full flex items-center justify-center mr-3 mt-1 flex-shrink-0">
-                                        <i class="fas fa-ice-cream text-green-400 text-xs"></i>
-                                    </div>
-                                    <div>
-                                        <span class="font-bold text-green-300">第二天的德泽：</span>
-                                        <span class="text-gray-300">是你的目标，那里的冰淇淋是给走完 10 公里的你最好的奖励。</span>
-                                    </div>
+                                    <i class="fas fa-chevron-right text-amber-500 mt-1 mr-2 flex-shrink-0"></i>
+                                    <span>第二天的德泽是你的目标，那里的冰淇淋是给走完 10 公里的你最好的奖励。</span>
                                 </li>
                             </ul>
                         </div>
-
+                        
                         <!-- 关于温差 -->
                         <div class="bg-gray-800 border border-amber-800 rounded-lg p-6">
                             <div class="flex items-center mb-4">
@@ -537,57 +859,50 @@
                                 </div>
                                 <h3 class="text-xl font-bold text-amber-300 font-orbitron">关于温差</h3>
                             </div>
-                            <ul class="space-y-4">
+                            <ul class="space-y-3 text-gray-300">
                                 <li class="flex items-start">
-                                    <div class="w-6 h-6 bg-blue-900 rounded-full flex items-center justify-center mr-3 mt-1 flex-shrink-0">
-                                        <i class="fas fa-mountain text-blue-400 text-xs"></i>
-                                    </div>
-                                    <div>
-                                        <span class="font-bold text-blue-300">上高地海拔 1500 米：</span>
-                                        <span class="text-gray-300">5 月 1 日早晨可能只有 5-8 度，徒步中会热，停下会冷。穿脱方便的拉链层是核心。</span>
-                                    </div>
+                                    <i class="fas fa-chevron-right text-blue-500 mt-1 mr-2 flex-shrink-0"></i>
+                                    <span>上高地海拔 1500 米，5 月 1 日早晨可能只有 5-8 度，徒步中会热，停下会冷。</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <i class="fas fa-chevron-right text-blue-500 mt-1 mr-2 flex-shrink-0"></i>
+                                    <span>穿脱方便的拉链层是核心。</span>
                                 </li>
                             </ul>
                         </div>
-
+                        
                         <!-- 关于体力 -->
                         <div class="bg-gray-800 border border-amber-800 rounded-lg p-6">
                             <div class="flex items-center mb-4">
-                                <div class="w-10 h-10 bg-amber-900 rounded-full flex items-center justify-center mr-3">
-                                    <i class="fas fa-running text-amber-400 text-xl"></i>
+                                <div class="w-10 h-10 bg-green-900 rounded-full flex items-center justify-center mr-3">
+                                    <i class="fas fa-heartbeat text-green-400 text-xl"></i>
                                 </div>
                                 <h3 class="text-xl font-bold text-amber-300 font-orbitron">关于体力</h3>
                             </div>
-                            <ul class="space-y-4">
+                            <ul class="space-y-3 text-gray-300">
                                 <li class="flex items-start">
-                                    <div class="w-6 h-6 bg-amber-900 rounded-full flex items-center justify-center mr-3 mt-1 flex-shrink-0">
-                                        <i class="fas fa-heartbeat text-amber-400 text-xs"></i>
-                                    </div>
-                                    <div>
-                                        <span class="font-bold text-amber-300">第二天是 15km 平地：</span>
-                                        <span class="text-gray-300">第一天是骑行+山路。如果第一天觉得太累，第二天到河童桥后可以视情况放弃"德泽"折返点，就在明神池转转，不要硬撑。</span>
-                                    </div>
+                                    <i class="fas fa-chevron-right text-green-500 mt-1 mr-2 flex-shrink-0"></i>
+                                    <span>第二天是 15km 平地，第一天是骑行+山路。</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <i class="fas fa-chevron-right text-green-500 mt-1 mr-2 flex-shrink-0"></i>
+                                    <span>如果第一天觉得太累，第二天到河童桥后可以视情况放弃"德泽"折返点，就在明神池转转，不要硬撑。</span>
                                 </li>
                             </ul>
                         </div>
-
+                        
                         <!-- 关于应急 -->
                         <div class="bg-gray-800 border border-amber-800 rounded-lg p-6">
                             <div class="flex items-center mb-4">
-                                <div class="w-10 h-10 bg-purple-900 rounded-full flex items-center justify-center mr-3">
-                                    <i class="fas fa-first-aid text-purple-400 text-xl"></i>
+                                <div class="w-10 h-10 bg-red-900 rounded-full flex items-center justify-center mr-3">
+                                    <i class="fas fa-first-aid text-red-400 text-xl"></i>
                                 </div>
                                 <h3 class="text-xl font-bold text-amber-300 font-orbitron">关于应急</h3>
                             </div>
-                            <ul class="space-y-4">
+                            <ul class="space-y-3 text-gray-300">
                                 <li class="flex items-start">
-                                    <div class="w-6 h-6 bg-purple-900 rounded-full flex items-center justify-center mr-3 mt-1 flex-shrink-0">
-                                        <i class="fas fa-pills text-purple-400 text-xs"></i>
-                                    </div>
-                                    <div>
-                                        <span class="font-bold text-purple-300">随身携带：</span>
-                                        <span class="text-gray-300">一小袋电解质冲剂，以及士力架，能量棒等。</span>
-                                    </div>
+                                    <i class="fas fa-chevron-right text-red-500 mt-1 mr-2 flex-shrink-0"></i>
+                                    <span>随身带一小袋电解质冲剂，以及士力架，能量棒等。</span>
                                 </li>
                             </ul>
                         </div>
@@ -597,35 +912,15 @@
         </main>
     </div>
 
-    <!-- 战术终端底部 -->
-    <footer class="bg-black border-t-2 border-green-700 py-6 px-4 mt-8">
-        <div class="container mx-auto">
-            <div class="flex flex-col md:flex-row justify-between items-center">
-                <div class="mb-4 md:mb-0">
-                    <p class="text-green-400 font-share-tech">GW旅行战术计划 © 2026 - 特种部队作战终端</p>
-                    <p class="text-gray-500 text-sm">设计用于移动设备战术查看 | 双击 index.html 即可部署</p>
-                </div>
-                <div class="flex space-x-4">
-                    <div class="text-center">
-                        <div class="w-10 h-10 bg-gray-800 border border-green-700 rounded-full flex items-center justify-center mx-auto">
-                            <i class="fas fa-mobile-alt text-green-400"></i>
-                        </div>
-                        <p class="text-xs text-gray-400 mt-1">移动优化</p>
-                    </div>
-                    <div class="text-center">
-                        <div class="w-10 h-10 bg-gray-800 border border-amber-700 rounded-full flex items-center justify-center mx-auto">
-                            <i class="fas fa-bolt text-amber-400"></i>
-                        </div>
-                        <p class="text-xs text-gray-400 mt-1">快速响应</p>
-                    </div>
-                    <div class="text-center">
-                        <div class="w-10 h-10 bg-gray-800 border border-red-700 rounded-full flex items-center justify-center mx-auto">
-                            <i class="fas fa-shield-alt text-red-400"></i>
-                        </div>
-                        <p class="text-xs text-gray-400 mt-1">战术可靠</p>
-                    </div>
-                </div>
-            </div>
+    <!-- 页脚 -->
+    <footer class="bg-black border-t-2 border-amber-500 py-4 px-6 mt-8">
+        <div class="container mx-auto text-center">
+            <p class="text-gray-500 text-sm font-share-tech">
+                <i class="fas fa-shield-alt mr-1"></i> GW旅行战术计划 v2.0 · 特种部队作战终端
+            </p>
+            <p class="text-gray-600 text-xs mt-1 font-share-tech">
+                系统状态: <span class="text-green-400">ONLINE</span> · 最后更新: 2026.04
+            </p>
         </div>
     </footer>
 </body>

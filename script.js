@@ -51,6 +51,7 @@ function updateTabStatus(tabId) {
         'preparation': '准备清单检查中',
         'day1': '4月30日行程分析',
         'day2': '5月1日拉练模拟',
+        'equipment': '战术物资整备系统',
         'guide': '战术指南加载'
     };
     
@@ -219,6 +220,67 @@ function detectDevice() {
         document.body.classList.add('desktop-device');
         console.log('桌面设备检测：启用键盘快捷键');
     }
+}
+
+// ==========================================
+// 战术物资整备 - 装备清单交互
+// ==========================================
+
+function initEquipmentChecklist() {
+    const checkboxes = document.querySelectorAll('.equip-checkbox');
+    const progressBar = document.getElementById('equipment-progress-bar');
+    const progressText = document.getElementById('equipment-progress-text');
+    const countText = document.getElementById('equipment-count-text');
+    
+    if (!checkboxes.length || !progressBar) return;
+    
+    const total = checkboxes.length;
+    
+    // 从 localStorage 恢复状态
+    checkboxes.forEach((cb, index) => {
+        const saved = localStorage.getItem(`equip_${index}`);
+        if (saved === 'checked') {
+            cb.checked = true;
+        }
+    });
+    
+    // 更新进度
+    function updateProgress() {
+        const checked = document.querySelectorAll('.equip-checkbox:checked').length;
+        const percent = Math.round((checked / total) * 100);
+        
+        progressBar.style.width = percent + '%';
+        progressText.textContent = percent + '%';
+        countText.textContent = `${checked} / ${total} 项已核对`;
+        
+        // 进度条颜色变化
+        if (percent === 100) {
+            progressBar.className = 'h-full bg-gradient-to-r from-green-400 via-green-500 to-green-400 rounded-full transition-all duration-500';
+            progressText.className = 'text-green-400 font-share-tech text-sm';
+            progressText.textContent = '✓ 100% · 整备完成！';
+        } else if (percent >= 50) {
+            progressBar.className = 'h-full bg-gradient-to-r from-green-600 via-amber-500 to-green-400 rounded-full transition-all duration-500';
+        } else {
+            progressBar.className = 'h-full bg-gradient-to-r from-green-600 via-amber-500 to-green-400 rounded-full transition-all duration-500';
+        }
+    }
+    
+    // 绑定事件
+    checkboxes.forEach((cb, index) => {
+        cb.addEventListener('change', function() {
+            // 保存到 localStorage
+            localStorage.setItem(`equip_${index}`, this.checked ? 'checked' : '');
+            updateProgress();
+            
+            // 战术反馈音效（模拟）
+            if (this.checked) {
+                console.log('装备已标记: ' + (this.nextElementSibling?.nextElementSibling?.querySelector('.equip-item-name')?.textContent || ''));
+            }
+        });
+    });
+    
+    // 初始更新
+    updateProgress();
 }
 
 // 初始化设备检测
@@ -581,6 +643,9 @@ document.addEventListener('DOMContentLoaded', function() {
     initTabSwitching();
     initTimelineAnimation();
     initTacticalEffects();
+    
+    // 装备清单初始化
+    initEquipmentChecklist();
     
     // 地图初始化
     initMaps();
