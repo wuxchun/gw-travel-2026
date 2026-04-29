@@ -52,7 +52,8 @@ function updateTabStatus(tabId) {
         'day1': '4月30日行程分析',
         'day2': '5月1日拉练模拟',
         'equipment': '战术物资整备系统',
-        'guide': '战术指南加载'
+        'guide': '战术指南加载',
+        'transport': '交通行程查询中'
     };
     
     const statusText = statusMap[tabId] || '任务进行中';

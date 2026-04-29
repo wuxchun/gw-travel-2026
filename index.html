@@ -63,6 +63,9 @@
                 <button id="tab-guide" class="tab-btn px-4 py-3 rounded-md font-orbitron text-xs md:text-sm transition-all duration-300" data-tab="guide">
                     <i class="fas fa-book mr-1"></i>战术指南
                 </button>
+                <button id="tab-transport" class="tab-btn px-4 py-3 rounded-md font-orbitron text-xs md:text-sm transition-all duration-300" data-tab="transport">
+                    <i class="fas fa-route mr-1"></i>交通行程
+                </button>
             </div>
         </div>
 
@@ -817,6 +820,120 @@
                                         <span class="equip-item-meta">4/29 晚完成打包，确认总重。</span>
                                     </span>
                                 </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 交通行程详情 -->
+            <section id="transport" class="tab-content">
+                <div class="mb-8">
+                    <h2 class="text-2xl md:text-3xl font-bold mb-6 text-green-400 border-l-4 border-green-500 pl-4 font-orbitron">
+                        <i class="fas fa-route mr-2"></i>交通行程详情（Transport Details）
+                    </h2>
+                    <p class="text-gray-400 text-sm mb-6 ml-2 font-share-tech">Train & Bus Schedule · 乘车信息一览</p>
+
+                    <!-- 4月30日 去程 -->
+                    <div class="transport-card">
+                        <div class="transport-card-header">
+                            <i class="fas fa-train mr-2"></i>4月30日（去程）新宿 → 小渊泽
+                        </div>
+                        <div class="transport-card-body">
+                            <div class="transport-row">
+                                <span class="transport-label"><i class="fas fa-clock text-green-400 w-5"></i>时间</span>
+                                <span class="transport-value">新宿 <strong>07:30</strong> → 小渊泽 <strong>09:36</strong></span>
+                            </div>
+                            <div class="transport-row">
+                                <span class="transport-label"><i class="fas fa-subway text-amber-400 w-5"></i>线路</span>
+                                <span class="transport-value">中央线特急</span>
+                            </div>
+                            <div class="transport-row">
+                                <span class="transport-label"><i class="fas fa-tag text-blue-400 w-5"></i>列车名</span>
+                                <span class="transport-value font-share-tech text-amber-300">あずさ 3号（特急）</span>
+                            </div>
+                            <div class="transport-row">
+                                <span class="transport-label"><i class="fas fa-map-pin text-purple-400 w-5"></i>站台</span>
+                                <span class="transport-value">新宿站 9号 或 10号月台（10号可能性大）</span>
+                            </div>
+                            <div class="transport-row">
+                                <span class="transport-label"><i class="fas fa-chair text-green-400 w-5"></i>座位</span>
+                                <span class="transport-value font-share-tech">指定席 5号车 9番A席</span>
+                            </div>
+                            <div class="transport-row">
+                                <span class="transport-label"><i class="fas fa-info-circle text-gray-400 w-5"></i>备注</span>
+                                <span class="transport-value text-gray-400">Ticketless 换乘优惠，无需使用 IC 卡（利用無し）</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 5月1日 上高地巴士 -->
+                    <div class="transport-card">
+                        <div class="transport-card-header" style="border-left-color: #f59e0b;">
+                            <i class="fas fa-bus mr-2"></i>5月1日（上高地/松本行程）
+                        </div>
+                        <div class="transport-card-body">
+                            <div class="transport-sub-header">
+                                <i class="fas fa-arrow-right text-green-400 mr-1"></i>【去程巴士】新岛岛 → 大正池
+                            </div>
+                            <div class="transport-row">
+                                <span class="transport-label"><i class="fas fa-clock text-green-400 w-5"></i>车次</span>
+                                <span class="transport-value font-share-tech">0002 便 02 号车</span>
+                            </div>
+                            <div class="transport-row">
+                                <span class="transport-label"><i class="fas fa-sign-in-alt text-green-400 w-5"></i>乘车</span>
+                                <span class="transport-value">新岛岛站 <strong>08:00</strong> 发车
+                                    <a href="https://maps.google.com/?q=新島島駅" target="_blank" rel="noopener" class="map-btn">
+                                        <i class="fas fa-map-marked-alt mr-1"></i>查看地图
+                                    </a>
+                                </span>
+                            </div>
+                            <div class="transport-row">
+                                <span class="transport-label"><i class="fas fa-sign-out-alt text-red-400 w-5"></i>下车</span>
+                                <span class="transport-value">大正池 <strong>08:54</strong> 到着</span>
+                            </div>
+
+                            <div class="transport-divider"></div>
+
+                            <div class="transport-sub-header">
+                                <i class="fas fa-arrow-left text-amber-400 mr-1"></i>【回程巴士】上高地 → 松本方向
+                            </div>
+                            <div class="transport-row">
+                                <span class="transport-label"><i class="fas fa-clock text-amber-400 w-5"></i>车次</span>
+                                <span class="transport-value font-share-tech">0011 便 01 号车</span>
+                            </div>
+                            <div class="transport-row">
+                                <span class="transport-label"><i class="fas fa-sign-in-alt text-amber-400 w-5"></i>乘车</span>
+                                <span class="transport-value">上高地 <strong>16:00</strong> 发车
+                                    <a href="https://maps.google.com/?q=上高地バスターミナル" target="_blank" rel="noopener" class="map-btn">
+                                        <i class="fas fa-map-marked-alt mr-1"></i>查看地图
+                                    </a>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 5月1日 回程 -->
+                    <div class="transport-card">
+                        <div class="transport-card-header" style="border-left-color: #ef4444;">
+                            <i class="fas fa-train mr-2"></i>5月1日（回程）松本 → 新宿
+                        </div>
+                        <div class="transport-card-body">
+                            <div class="transport-row">
+                                <span class="transport-label"><i class="fas fa-clock text-green-400 w-5"></i>时间</span>
+                                <span class="transport-value">松本 <strong>18:40</strong> → 新宿 <strong>21:17</strong></span>
+                            </div>
+                            <div class="transport-row">
+                                <span class="transport-label"><i class="fas fa-tag text-blue-400 w-5"></i>列车名</span>
+                                <span class="transport-value font-share-tech text-amber-300">あずさ 54号（特急）</span>
+                            </div>
+                            <div class="transport-row">
+                                <span class="transport-label"><i class="fas fa-chair text-green-400 w-5"></i>座位</span>
+                                <span class="transport-value font-share-tech">指定席 11号车 8番D席</span>
+                            </div>
+                            <div class="transport-row">
+                                <span class="transport-label"><i class="fas fa-info-circle text-gray-400 w-5"></i>备注</span>
+                                <span class="transport-value text-gray-400">Ticketless 换乘优惠</span>
                             </div>
                         </div>
                     </div>
